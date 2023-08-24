@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "render/ShaderProgram.h"
+
 int window_width = 900;
 int window_height = 600;
 
@@ -14,8 +16,8 @@ int main()
         glfwTerminate();
     }
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow *pWindow = glfwCreateWindow(window_width, window_height, "OpenGl", nullptr, nullptr);
@@ -33,11 +35,16 @@ int main()
         glfwTerminate();
     }
 
+    std::string vertexPath("D:/projects/LearnOpenGL/shaders/vertexSahder.txt");
+    std::string fragmentPath("D:/projects/LearnOpenGL/shaders/fragmentShader.txt");
+
+    ShaderProgram program(vertexPath, fragmentPath);
+
     while (!glfwWindowShouldClose(pWindow))
     {
         glClearColor(0.2, 0.2, 0.2, 0.0);
         glClear(GL_COLOR_BUFFER_BIT);
-        
+
         glfwSwapBuffers(pWindow);
         glfwPollEvents();
     }

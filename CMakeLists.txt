@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(LearnOpenGl)
 
-add_executable(LearnOpenGl src/main.cpp)
+add_executable(LearnOpenGl src/main.cpp
+                            src/render/ShaderProgram.h
+                            src/render/ShaderProgram.cpp)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
