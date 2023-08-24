@@ -19,10 +19,12 @@ ShaderProgram::ShaderProgram(std::string &vertexShaderPath, std::string &fragmen
     fragmentCode = fragmentStr.str();
 
     GLuint vertexShader;
+    createShader(vertexShader, vertexCode, GL_VERTEX_SHADER);
     if (!createShader(vertexShader, vertexCode, GL_VERTEX_SHADER))
         std::cerr << ": VERTEX_SHADER_CREATION_ERROR -------\n\n";
 
     GLuint fragmentShader;
+    createShader(fragmentShader, fragmentCode, GL_FRAGMENT_SHADER);
     if (!createShader(fragmentShader, fragmentCode, GL_FRAGMENT_SHADER))
         std::cerr << ": FRAGMENT_SHADER_CREATION_ERROR -----\n\n";
 
@@ -31,14 +33,14 @@ ShaderProgram::ShaderProgram(std::string &vertexShaderPath, std::string &fragmen
     glAttachShader(progID, fragmentShader);
     glLinkProgram(progID);
 
-    if (!errorsInfo(progID))
-        std::cerr << ": PROGRAM_CREATION_ERROR -------------\n\n";
+    if(!errorsInfo(progID))
+        std::cerr << ": PROGRAM_LINK_ERROR -----------------\n\n";
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 }
 
-bool ShaderProgram::createShader(GLuint shaderID, std::string &source, GLenum shaderType)
+bool ShaderProgram::createShader(GLuint& shaderID, std::string &source, GLenum shaderType)
 {
     shaderID = glCreateShader(shaderType);
     const char *code = source.c_str();
@@ -50,14 +52,14 @@ bool ShaderProgram::createShader(GLuint shaderID, std::string &source, GLenum sh
 
 bool ShaderProgram::errorsInfo(GLuint ID)
 {
-    int success = 1;
+    int success;
     char infoLog[1024];
-    if (this->progID == ID)
+    if (progID == ID)
     {
-        glGetShaderiv(progID, GL_COMPILE_STATUS, &success);
+        glGetProgramiv(ID, GL_LINK_STATUS, &success);
         if (!success)
         {
-            glGetProgramInfoLog(progID, sizeof(infoLog), nullptr, infoLog);
+            glGetProgramInfoLog(ID, sizeof(infoLog), nullptr, infoLog);
             std::cerr << "ERROR::" << infoLog;
             return isOk = false;
         }

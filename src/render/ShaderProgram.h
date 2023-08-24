@@ -10,14 +10,15 @@
 class ShaderProgram
 {
 private:
-    GLuint progID;
+    GLuint progID = 0;
     bool isOk = true;
 
-    bool createShader(GLuint shaderID, std::string &source, GLenum shaderType);
+    bool createShader(GLuint &shaderID, std::string &source, GLenum shaderType);
     bool errorsInfo(GLuint ID);
 
 public:
     ShaderProgram(std::string &vertexShaderPath, std::string &fragmentShaderPath);
 
     GLuint ID() { return progID; }
+    void use() { glUseProgram(progID); }
 };
