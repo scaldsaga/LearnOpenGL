@@ -4,7 +4,7 @@
 #include <iostream>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "render/stb_image.h"
+#include "render/texture.h"
 #include "render/ShaderProgram.h"
 
 int window_width = 900;
@@ -70,27 +70,8 @@ int main()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    GLuint TEX;
-    glGenTextures(1, &TEX);
-    glBindTexture(GL_TEXTURE_2D, TEX);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load("D:/projects/LearnOpenGL/textures/container.jpg", &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cerr << "ERROR::TEXTURE_LOAD_ERROR\n";
-        stbi_image_free(data);
-    }
-    stbi_image_free(data);
+    std::string texturePath("D:/projects/LearnOpenGL/textures/container.jpg");
+    texture tex1(texturePath);
 
     while (!glfwWindowShouldClose(pWindow))
     {

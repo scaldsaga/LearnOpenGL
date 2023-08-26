@@ -3,7 +3,9 @@ project(LearnOpenGl)
 
 add_executable(LearnOpenGl src/main.cpp
                             src/render/ShaderProgram.h
-                            src/render/ShaderProgram.cpp)
+                            src/render/ShaderProgram.cpp
+                            src/render/texture.h
+                            src/render/texture.cpp)
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
